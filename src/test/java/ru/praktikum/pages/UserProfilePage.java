@@ -1,6 +1,8 @@
 package ru.praktikum.pages;
 
 import com.codeborne.selenide.SelenideElement;
+
+import java.time.Duration;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -9,9 +11,13 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class UserProfilePage {
 
+    public void waitForPageLoad() {
+        $x("//h1[@class='h1 zeroMargin' and text()='Мой профиль']").shouldBe(visible, Duration.ofSeconds(5));
+    }
+
     public void verifyAdIsVisible(String adTitle) {
-        SelenideElement adElement = $("h2.h2");
-        adElement.scrollTo().shouldBe(visible);
+        SelenideElement adElement = $x("//div[@class='card']//h2[@class='h2' and text()='" + adTitle + "']");
+        adElement.scrollTo().shouldBe(visible, Duration.ofSeconds(1));
     }
 
     public void clickEditButtonForAd(String adTitle) {

@@ -5,6 +5,7 @@ import io.cucumber.java.ru.Тогда;
 import ru.praktikum.context.TestContext;
 import ru.praktikum.pages.CreateAdPage;
 import ru.praktikum.pages.HeaderPage;
+import ru.praktikum.pages.MainPage;
 import ru.praktikum.pages.UserProfilePage;
 
 public class CreateAdSteps {
@@ -13,6 +14,7 @@ public class CreateAdSteps {
     private final HeaderPage headerPage = new HeaderPage();
     private final CreateAdPage createAdPage = new CreateAdPage();
     private final UserProfilePage myProfilePage = new UserProfilePage();
+    private final MainPage mainPage = new MainPage();
 
     private String adTitle;
 
@@ -27,11 +29,13 @@ public class CreateAdSteps {
 
         headerPage.clickCreateAdButton();
         createAdPage.createAd(adTitle, price);
+        mainPage.waitForPageLoad();
     }
 
     @Тогда("созданное объявление появляется в списке объявлений пользователя")
     public void thisAdAppearsInMyAdList() {
         headerPage.clickProfileIcon();
+        myProfilePage.waitForPageLoad();
         myProfilePage.verifyAdIsVisible(adTitle);
     }
 }
